@@ -47,6 +47,8 @@ public class Uploader extends HttpServlet {
 			}else{		
 				PictureFile p1 = new PictureFile(DBManager1.getNextPictureId(), Integer.parseInt(request.getParameter("ticket_id")), new Date(),request.getParameter("author"), fileType);
 				DBManager1.savePicture(p1);
+				preparePage("ticketview.jsp", request, response);
+				request.getRequestDispatcher("ticketview.jsp").forward(request, response);
 				try {
 			        out = new FileOutputStream(new File(path + File.separator + fileName + "." + p1.getType()));
 			        filecontent = filePart.getInputStream();
@@ -73,8 +75,6 @@ public class Uploader extends HttpServlet {
 			            writer.close();
 			        }
 			    }
-		        preparePage("ticketview.jsp", request, response);
-				request.getRequestDispatcher("ticketview.jsp").forward(request, response);
 			}
 		}
 		writer.println("<a href=\"Controller?action=preparePage&pageName=ticketview.jsp&ticket_id=" + request.getParameter("ticket_id") + "\">Back to ticket</a>");
