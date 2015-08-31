@@ -11,24 +11,32 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="Controller?action=preparePage&pageName=admin/users.jsp"> back to userlist </a>
-	<h1>The user:</h1>
-	UserID=${u1.userid}<br> 
-	Password=${u1.password}<br> 
+	User:
+	<a href=${'Controller?action=preparePage&pageName=userpage.jsp&user_id='.concat(sessionScope.user)}>
+		${sessionScope.user}</a> &nbsp;
+	<a href="Controller?action=logout"> logout </a> &nbsp;
+	<a href=${"Controller?action=preparePage&pageName=ticketview.jsp&ticket_id=".concat(c1.tid)}> back to the ticket </a>
+	&nbsp;&nbsp;<a href="Controller?action=preparePage&pageName=index.jsp"> back to index </a>
+	<h1>The comment:</h1>
+	CommentID=${c1.cid}<br>
+	Ticket= ${c1.tid}<br>
+	Author=${c1.author} <br>
+	Creation date=${c1.creation_date} <br>
+	Message=${c1.message} <br>
 	
-	<h1>Change the user</h1>
-	<form action="Controller" method="post">
-		<input type="hidden" name="user_id" value="${u1.userid}" /> 
-		<input type="hidden" name="action" value="changeUser" /> 
-		Password:<input name="passwordinput" type="text" />${errorMsgs.passwordinput}<br />
-		<input type="submit" value="change the user">
+	<h1>Change the comment</h1>
+	<form action="Controller" method="post"> 
+		<input type="hidden" name="action" value="changeComment" /> 
+		<input type="hidden" name="comment_id" value="${c1.cid}" />
+		Message:<input name="message" type="text" />${errorMsgs.message}<br />
+		<input type="submit" value="change the comment">
 	</form>
 
-
 	<form action="Controller" method="post">
-		<input type="hidden" name="user_id" value="${u1.userid}" /> 
-		<input type="hidden" name="action" value="deleteUser" /> 
-		<input type="submit" value="delete the user">
+		<input type="hidden" name="cid" value="${c1.cid}" />  
+		<input type="hidden" name="ticket_id" value="${c1.tid}" />  
+		<input type="hidden" name="action" value="deleteComment" /> 
+		<input type="submit" value="delete the comment">
 	</form>
 
 <!-- development -->

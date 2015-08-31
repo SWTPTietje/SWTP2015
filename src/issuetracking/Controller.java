@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import action.Action;
-import javax.ejb.EJB;
 
 /**
  * Servlet implementation class Controller
@@ -19,9 +18,8 @@ import javax.ejb.EJB;
 @WebServlet("/Controller")
 public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	@EJB
-        private DBManager DBManager1;
-        
+	protected static final DBManager DBManager1 = DBManager.getInstance();
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -40,7 +38,6 @@ public class Controller extends HttpServlet {
 		Action aktion = Action.actionFactory(action);
 
 		if (aktion != null) {
-                    request.setAttribute("dao", DBManager1);
 			String result = aktion.execute(request, response);
 			if (result != null) {
 				preparePage(result, request, response);
@@ -64,6 +61,7 @@ public class Controller extends HttpServlet {
 	public void preparePage(String pageName, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		DBManager DBManager1 = DBManager.getInstance();
 
 		if (pageName.endsWith("index.jsp")) {
 			request.setAttribute("users", DBManager1.getUsers());
@@ -138,6 +136,8 @@ public class Controller extends HttpServlet {
 					Integer.parseInt(request.getParameter("ticket_id"))));
 			request.setAttribute("compids", DBManager1.getComponents());
 			
+			request.setAttribute("ticket_pictures", DBManager1.getPicturesByTicket(Integer.parseInt(request.getParameter("ticket_id"))));
+			
 			request.setAttribute("ticket_comments", DBManager1.getCommentsByTicket(
 					Integer.parseInt(request.getParameter("ticket_id"))));
 
@@ -162,11 +162,11 @@ public class Controller extends HttpServlet {
 			request.setAttribute("u1", u1);
 		}
 		if (pageName.endsWith("userpage.jsp")) {
-			User u1 = DBManager1.getUserByUserid(request.getParameter(request.getUserPrincipal().getName().toString()));
+			User u1 = DBManager1.getUserByUserid(request.getParameter("user_id"));
 			request.setAttribute("u1", u1);
 		}
 		if (pageName.endsWith("login.jsp")) {
-
+			
 		}
 		
 		if(pageName.endsWith("components.jsp")){

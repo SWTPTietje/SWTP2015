@@ -4,6 +4,16 @@
 <%@ page import="issuetracking.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.text.*"%>
+
+<% 
+DBManager DBManager1 = DBManager.getInstance();
+	if (!DBManager1.checkLogin((String) request.getSession()
+					.getAttribute("user"), (String) request.getSession()
+					.getAttribute("password"))) {
+				request.getRequestDispatcher("login.jsp").forward(request,
+						response);
+			}
+%>
 	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -48,10 +58,10 @@ function setchecked(selectid,valuewert)
 <body>
 
 		User:
-	<a href="Controller?action=preparePage&pageName=user/userpage.jsp">
-		${pageContext.request.userPrincipal.name}</a>
+	<a href=${'Controller?action=preparePage&pageName=userpage.jsp&user_id='.concat(sessionScope.user)}>
+		${sessionScope.user}</a>
 	<a href="Controller?action=logout"> logout </a>&nbsp;
-	<a href="Controller?action=preparePage&pageName=user/sprints.jsp"> back to
+	<a href="Controller?action=preparePage&pageName=sprints.jsp"> back to
 		sprints </a>
 
 
@@ -72,6 +82,20 @@ function setchecked(selectid,valuewert)
 			${compid1.compid}<br>
 	</c:forEach>
 
+	<h1>Pictures:</h1><br>
+	<c:forEach items = "${ticket_pictures}" var="pic">
+		<img alt="uploaded ${pic.uploadDateAsString} by ${pic.uploader}" src="/ITS_1/image?file=${pic.pictureId}"><br>
+		uploaded ${pic.uploadDateAsString} by ${pic.uploader}<br>
+	</c:forEach>
+	
+	Attach picture: <br>
+	<form method="POST" action="Uploader" enctype="multipart/form-data" >
+		<input type="hidden" name = "ticket_id" value = "${t1.id}" /> 
+		<input type="hidden" name="author" value="${sessionScope.user}" /> 
+        <input type="file" name="file" id="file" /> <br/>
+    	<input type="submit" value="Upload" name="upload" id="upload" />
+	</form>
+	
 	<h1>Comments:</h1>
 	<c:forEach items="${ticket_comments}" var="comment1">
 	        comment from:${comment1.author}  &nbsp;&nbsp;&nbsp; posted at:${comment1.dateAsString} &nbsp;&nbsp;&nbsp;${comment1.author == sessionScope.user ? '<a href="Controller?action=preparePage&pageName=commentview.jsp&comment_id='.concat(comment1.cid).concat('"> bearbeiten </a>') : ''}<br>
@@ -118,7 +142,7 @@ function setchecked(selectid,valuewert)
 		</select><br> 
 		<span id="estimated_time_change_span" style="display: none;">
 		Estimated time:<input name="estimated_time" value="${t1.estimated_time}" type="text" />hours  ${errorMsgs.estimated_time}</span><br /> 
-		Components <a href="Controller?action=preparePage&pageName=user/components.jsp">(addComponents)</a>:<br>
+		Components <a href="Controller?action=preparePage&pageName=components.jsp">(addComponents)</a>:<br>
 		<c:forEach items="${compids}" var="compid1">
 			<input type="checkbox" name="compid" value="${compid1.compid}">${compid1.compid}
 			<br>

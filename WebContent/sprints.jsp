@@ -6,6 +6,16 @@
 <%@ page import="java.text.*"%>
 <%@ page import="issuetracking.*"%>
 
+<% 
+  DBManager DBManager1 = DBManager.getInstance();
+// Wenn der Nutzer nicht angemeldet ist wird er zu login.jsp geleitet
+if (!DBManager1.checkLogin((String) request.getSession()
+		.getAttribute("user"), (String) request.getSession()
+		.getAttribute("password"))) {
+	request.getRequestDispatcher("login.jsp").forward(request,
+			response);
+}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -30,8 +40,8 @@ th {
 <body>
 
 	User:
-        <a href="Controller?action=preparePage&pageName=user/userpage.jsp">
-		${pageContext.request.userPrincipal.name}</a>
+	<a href=${'Controller?action=preparePage&pageName=userpage.jsp&user_id='.concat(sessionScope.user)}>
+		${sessionScope.user}</a>
 	<a href="Controller?action=logout"> logout </a>
 
 	<h1>New Sprint</h1>
@@ -75,10 +85,10 @@ th {
 		<c:forEach items="${sprints}" var="sprint1">
 			<tr>
 				<td><a     
-					href=${"Controller?action=preparePage&pageName=user/sprintDetail.jsp&sprintid=".concat(sprint1.getSprintid())}>
+					href=${"Controller?action=preparePage&pageName=sprintDetail.jsp&sprintid=".concat(sprint1.getSprintid())}>
 						${sprint1.title} </a></td>
 					<td><a     
-					href=${"Controller?action=preparePage&pageName=user/sprintstickets.jsp&sprintid=".concat(sprint1.getSprintid())}>
+					href=${"Controller?action=preparePage&pageName=sprintstickets.jsp&sprintid=".concat(sprint1.getSprintid())}>
 						tickets </a></td>	
 						<td>   
 						${sprint1.getStartDateAsString()} </td>
@@ -91,7 +101,7 @@ th {
 	<br>
 	<br>
 	<a     
-					href=${"Controller?action=preparePage&pageName=user/index.jsp&sprintid=-2"}>
+					href=${"Controller?action=preparePage&pageName=index.jsp&sprintid=-2"}>
 						all tickets </a>
 <!-- development -->
 <br>

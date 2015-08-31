@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@ page import="java.util.*"%>
 <%@ page import="issuetracking.*"%>
-
+<%@ page import="java.util.*"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -12,51 +9,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<style>
-table, th, td {
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-th, td {
-	padding: 5px;
-}
-th {
-	text-align: left;
-}
-</style>
 </head>
 <body>
-	<a href="login.jsp"> back to login </a>
+	<a href="Controller?action=preparePage&pageName=index.jsp"> back to index </a>
+	<h1>Your data:</h1>
+	UserID=${u1.userid}<br> 
+	Password=${u1.password} <br> 
 	
- 	${regSuccess}
-	<h1>Register</h1>
+	<h1>Change your password</h1>
 	<form action="Controller" method="post">
-		<input type="hidden" name="action" value="register_from_users"/>
-		Username:<input name="useridinput" type="text"/>${errorMsgsReg.useridinput}<br />
-		Password:<input name="passwordinput" type="text"/>${errorMsgsReg.passwordinput}<br />
-		<input type="submit" value="register">
+		<input type="hidden" name="user_id" value="${u1.userid}" /> 
+		<input type="hidden" name="action" value="changeUser_from_account" /> 
+		Password:<input name="passwordinput" type="text" />${errorMsgs.passwordinput}<br />
+		<input type="submit" value="change your password">
 	</form>
 
-	<h1>Users</h1>
-	<table>
-		<col width="30">
-		<col width="100">
-		<col width="200">
-		<tr>
-			<th>Userid</th>
-			<th>Password</th>
-		</tr>
-		<c:forEach items="${users}" var="user1">
-			<tr>
-			<td>
-				<a href=${"Controller?action=preparePage&pageName=user/userview.jsp&user_id=".concat(user1.userid)}>
-				${user1.userid}</a>
-			</td>
-			<td>${user1.password}</td>
-			</tr>
-		</c:forEach>
-
-	</table>
+	<form action="Controller" method="post">
+		<input type="hidden" name="user_id" value="${u1.userid}" />  
+		<input type="hidden" name="action" value="deleteUser_from_account" /> 
+		<input type="submit" value="delete your account">
+	</form>
 
 <!-- development -->
 <br>

@@ -11,32 +11,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-	User:
-        <a href="Controller?action=preparePage&pageName=user/userpage.jsp">
-		${pageContext.request.userPrincipal.name}</a>
-	<a href="Controller?action=logout"> logout </a> &nbsp;
-	<a href=${"Controller?action=preparePage&pageName=user/ticketview.jsp&ticket_id=".concat(c1.tid)}> back to the ticket </a>
-	&nbsp;&nbsp;<a href="Controller?action=preparePage&pageName=user/index.jsp"> back to index </a>
-	<h1>The comment:</h1>
-	CommentID=${c1.cid}<br>
-	Ticket= ${c1.tid}<br>
-	Author=${c1.author} <br>
-	Creation date=${c1.creation_date} <br>
-	Message=${c1.message} <br>
+	<a href="Controller?action=preparePage&pageName=components.jsp"> back to componentlist </a>
+	<h1>The component:</h1>
+	ComponentID=${c1.compid}<br> 
+	Description=${c1.description}<br> 
 	
-	<h1>Change the comment</h1>
-	<form action="Controller" method="post"> 
-		<input type="hidden" name="action" value="changeComment" /> 
-		<input type="hidden" name="comment_id" value="${c1.cid}" />
-		Message:<input name="message" type="text" />${errorMsgs.message}<br />
-		<input type="submit" value="change the comment">
+	<h1>Change the component</h1>
+	<form action="Controller" method="post">
+		<input type="hidden" name="comp_id" value="${c1.compid}" /> 
+		<input type="hidden" name="action" value="changeComponent" /> 
+		Description:<input name="description" type="text" />${errorMsgs.description}<br />
+		<input type="submit" value="change the component">
 	</form>
 
+
 	<form action="Controller" method="post">
-		<input type="hidden" name="cid" value="${c1.cid}" />  
-		<input type="hidden" name="ticket_id" value="${c1.tid}" />  
-		<input type="hidden" name="action" value="deleteComment" /> 
-		<input type="submit" value="delete the comment">
+		<input type="hidden" name="comp_id" value="${c1.compid}" /> 
+		<input type="hidden" name="action" value="deleteComponent" /> 
+		<input type="submit" value="delete the component">
 	</form>
 
 <!-- development -->

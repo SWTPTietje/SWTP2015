@@ -38,10 +38,10 @@ th {
 <body>
 
 	User:
-        <a href="Controller?action=preparePage&pageName=user/userpage.jsp">
-		${pageContext.request.userPrincipal.name}</a>
+	<a href=${'Controller?action=preparePage&pageName=userpage.jsp&user_id='.concat(sessionScope.user)}>
+		${sessionScope.user}</a>
 	<a href="Controller?action=logout"> logout </a>&nbsp;
-	<a href="Controller?action=preparePage&pageName=user/sprints.jsp"> back to
+	<a href="Controller?action=preparePage&pageName=sprints.jsp"> back to
 		sprints </a>
 
 
@@ -84,7 +84,7 @@ th {
 			<tr>
 				<td>${ticket1.id}</td>
 				<td><a
-					href=${"Controller?action=preparePage&pageName=user/ticketview.jsp&ticket_id=".concat(ticket1.id)}>
+					href=${"Controller?action=preparePage&pageName=ticketview.jsp&ticket_id=".concat(ticket1.id)}>
 						${ticket1.title} </a>     remove?<input type="checkbox" name="nownosprinttickids" value="${ticket1.id}"></td>
 				<td>${ticket1.type}</td>
 				<td>${fn:length(ticket1.description) gt 25 ? fn:substring(ticket1.description, 0, 25).concat("..."):ticket1.description}
@@ -120,7 +120,7 @@ th {
 			<tr>
 				<td>${ticket1.id}</td>
 				<td><a
-					href=${"Controller?action=preparePage&pageName=user/ticketview.jsp&ticket_id=".concat(ticket1.id)}>
+					href=${"Controller?action=preparePage&pageName=ticketview.jsp&ticket_id=".concat(ticket1.id)}>
 						${ticket1.title} </a>remove?<input type="checkbox" name="nownosprinttickids" value="${ticket1.id}"></td>
 				<td>${ticket1.type}</td>
 				<td>${fn:length(ticket1.description) gt 25 ? fn:substring(ticket1.description, 0, 25).concat("..."):ticket1.description}
@@ -157,7 +157,7 @@ th {
 			<tr>
 				<td>${ticket1.id}</td>
 				<td><a
-					href=${"Controller?action=preparePage&pageName=user/ticketview.jsp&ticket_id=".concat(ticket1.id)}>
+					href=${"Controller?action=preparePage&pageName=ticketview.jsp&ticket_id=".concat(ticket1.id)}>
 						${ticket1.title} </a>remove?<input type="checkbox" name="nownosprinttickids" value="${ticket1.id}"></td>
 				<td>${ticket1.type}</td>
 				<td>${fn:length(ticket1.description) gt 25 ? fn:substring(ticket1.description, 0, 25).concat("..."):ticket1.description}
@@ -194,7 +194,7 @@ th {
 			<tr>
 				<td>${ticket1.id}</td>
 				<td><a
-					href=${"Controller?action=preparePage&pageName=user/ticketview.jsp&ticket_id=".concat(ticket1.id)}>
+					href=${"Controller?action=preparePage&pageName=ticketview.jsp&ticket_id=".concat(ticket1.id)}>
 						${ticket1.title} </a>remove?<input type="checkbox" name="nownosprinttickids" value="${ticket1.id}"></td>
 			</td>
 				<td>${ticket1.type}</td>

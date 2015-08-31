@@ -90,6 +90,6 @@ public class ChangeTicketAction implements Action {
 		}
 
 		request.setAttribute("errorMsgs", errorMsgs);
-		return "user/ticketview.jsp";
+		return "ticketview.jsp";
 	}
 }

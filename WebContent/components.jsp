@@ -30,10 +30,10 @@ th {
 <body>
 
 	User:
-        <a href="Controller?action=preparePage&pageName=user/userpage.jsp">
-		${pageContext.request.userPrincipal.name}</a>
+	<a href=${'Controller?action=preparePage&pageName=userpage.jsp&user_id='.concat(sessionScope.user)}>
+		${sessionScope.user}</a>
 	<a href="Controller?action=logout"> logout </a>&nbsp;
-	<a href="Controller?action=preparePage&pageName=user/sprints.jsp"> back to
+	<a href="Controller?action=preparePage&pageName=sprints.jsp"> back to
 		sprints </a>
 
 	<h1>New Component</h1>
@@ -56,7 +56,7 @@ th {
 		<c:forEach items="${components}" var="comp1">
 			<tr>
 				<td><a
-					href=${"Controller?action=preparePage&pageName=user/componentview.jsp&compid=".concat(comp1.compid)}>
+					href=${"Controller?action=preparePage&pageName=componentview.jsp&compid=".concat(comp1.compid)}>
 						${comp1.compid} </a></td>
 				<td>${fn:length(comp1.description) gt 25 ? fn:substring(comp1.description, 0, 25).concat("..."):comp1.description}
 				</td>

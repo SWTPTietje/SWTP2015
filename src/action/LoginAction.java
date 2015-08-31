@@ -8,7 +8,7 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class RegisterAction implements Action {
+public class LoginAction implements Action {
 
 	private static final DBManager DBManager1 = DBManager.getInstance();
 
@@ -16,20 +16,23 @@ public class RegisterAction implements Action {
 	public String execute(HttpServletRequest request,HttpServletResponse response) {
 
 		Map<String, String> errorMsgs = new HashMap<String, String>();
-		String regSuccess = null;
 		String useridinput = request.getParameter("useridinput");
 		String passwordinput = request.getParameter("passwordinput");
 
-		errorMsgs = User.validateUserRegistration(useridinput, passwordinput);
+		errorMsgs = User.validateUserLogin(useridinput, passwordinput);
+
 		if (errorMsgs.isEmpty()) {
-			DBManager1.registerUser(useridinput, passwordinput);
-			regSuccess = "Du wurdest registriert";
+			if (DBManager1.checkLogin(useridinput, passwordinput)) {
+				request.getSession().setAttribute("user", useridinput);
+				request.getSession().setAttribute("password", passwordinput);
+
+				return "sprints.jsp";
+			} else {
+				errorMsgs.put("useridinput", "Wrong username or password");
+			}
 		}
-		request.setAttribute("errorMsgsReg", errorMsgs);
-		request.setAttribute("regSuccess", regSuccess);
-		if ("register".equals(request.getParameter("action")))
-			return "login.jsp";
-		else
-			return "users.jsp";
+		request.setAttribute("errorMsgsLogin", errorMsgs);
+		return "login.jsp";
 	}
+
 }

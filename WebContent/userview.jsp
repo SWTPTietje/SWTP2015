@@ -11,23 +11,24 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="Controller?action=preparePage&pageName=user/index.jsp"> back to index </a>
-	<h1>Your data:</h1>
+	<a href="Controller?action=preparePage&pageName=users.jsp"> back to userlist </a>
+	<h1>The user:</h1>
 	UserID=${u1.userid}<br> 
-	Password=${u1.password} <br> 
+	Password=${u1.password}<br> 
 	
-	<h1>Change your password</h1>
+	<h1>Change the user</h1>
 	<form action="Controller" method="post">
 		<input type="hidden" name="user_id" value="${u1.userid}" /> 
-		<input type="hidden" name="action" value="changeUser_from_account" /> 
+		<input type="hidden" name="action" value="changeUser" /> 
 		Password:<input name="passwordinput" type="text" />${errorMsgs.passwordinput}<br />
-		<input type="submit" value="change your password">
+		<input type="submit" value="change the user">
 	</form>
 
+
 	<form action="Controller" method="post">
-		<input type="hidden" name="user_id" value="${u1.userid}" />  
-		<input type="hidden" name="action" value="deleteUser_from_account" /> 
-		<input type="submit" value="delete your account">
+		<input type="hidden" name="user_id" value="${u1.userid}" /> 
+		<input type="hidden" name="action" value="deleteUser" /> 
+		<input type="submit" value="delete the user">
 	</form>
 
 <!-- development -->
