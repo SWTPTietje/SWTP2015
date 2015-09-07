@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
@@ -21,6 +22,17 @@
         <input type="hidden" name="user_id" value="${u1.userid}" /> 
         <input type="hidden" name="action" value="changeUser" /> 
         Password:<input name="passwordinput" type="text" />${errorMsgs.passwordinput}<br />
+        <c:forTokens items="admin;user" delims=";" var="role">
+            <c:choose>
+                <c:when test="${u1.roles.contains(role)}">
+                    <input type="checkbox" name="roles" value="${role}" checked>${role}
+                </c:when>
+                <c:otherwise>
+                    <input type="checkbox" name="roles" value="${role}">${role}
+                </c:otherwise>
+            </c:choose>
+            <br>
+        </c:forTokens>
         <input type="submit" value="change the user">
     </form>
 

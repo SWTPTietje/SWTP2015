@@ -1,7 +1,9 @@
 package issuetracking;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class User {
 
@@ -40,8 +42,14 @@ public class User {
 
     private String userid;
     private String password;
+    private Set<String> roles;
+    
+    public User(){
+        roles = new HashSet<>();
+    }
 
     public User(String userid, String password) {
+        this();
         this.userid = userid;
         this.password = password;
     }
@@ -61,6 +69,20 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-
+    
+    public void addRole(String role){
+        roles.add(role);
+    }
+    
+    public Set<String> getRoles(){
+        return roles;
+    }
+    
+    public void clearRoles(){
+        roles.clear();
+    }
+    
+    public void removeRole(String role){
+        roles.remove(role);
+    }
 }

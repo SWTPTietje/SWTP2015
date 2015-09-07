@@ -196,6 +196,10 @@ public class DBManager {
             // 4. Process results
             while (myRs.next()) {
                 User u1 = new User(myRs.getString("USERID"), myRs.getString("PASSWORD"));
+                Statement getRoles = myConn.createStatement();
+                ResultSet roles = getRoles.executeQuery("select GROUPID from USERS_GROUPS where USERID = '" + u1.getUserid() + "';");
+                while(roles.next())
+                    u1.addRole(roles.getString("GROUPID"));
 
                 usersMap.put(u1.getUserid(), u1);
             }
@@ -382,6 +386,9 @@ public class DBManager {
                     + u1.getUserid() + "' ;";
 
             myStmt.executeUpdate(sql);
+            
+            Statement removeRolesStmt = myConn.createStatement();
+            removeRolesStmt.executeQuery("delete from USERS_GROUPS where USERID = '" + u1.getUserid() + "' ;");
             try {
                 if (myStmt != null) {
                     myStmt.close();
